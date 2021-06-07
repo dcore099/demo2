@@ -9,6 +9,7 @@ public class DemoApplication {
 
 	public static void main(String[] args) {
 		//	yoooo yoooo
+		//	This is and update test into both computers!!
 		System.out.println("Some stuff...");
 		SpringApplication.run(DemoApplication.class, args);
 	}
