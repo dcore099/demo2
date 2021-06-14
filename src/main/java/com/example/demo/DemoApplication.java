@@ -1,13 +1,14 @@
 package com.example.demo;
-/*
- * Anotación "ComponentScan" es requerida en spring boot o no encuentra el controlador en otro paquete
- */
-
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
-
+/**
+ * Anotación "ComponentScan" es requerida en spring boot o no encuentra el controlador en otro paquete
+ * 
+ * @author Administrador
+ *
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.*")
 public class DemoApplication {

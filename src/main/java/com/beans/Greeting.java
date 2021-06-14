@@ -1,8 +1,9 @@
 package com.beans;
-/*
- * Represents a greeting duh!
- */
 
+/**
+ * Represents a greeting duh!
+ * @author Administrador
+ */
 public class Greeting {
 	
 	public long id;
