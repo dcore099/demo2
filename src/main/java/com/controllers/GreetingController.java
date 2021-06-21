@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.beans.Greeting;
 
 /**
- * Regular controller for stuff..
+ * Regular REST controller for API stuff..
  * @author dcore099
  */
 @RestController
@@ -28,4 +28,5 @@ public class GreetingController {
 		System.out.println("Entering controller!");
 		return new Greeting(counter.incrementAndGet(), String.format(template, name));
 	}
+	
 }
