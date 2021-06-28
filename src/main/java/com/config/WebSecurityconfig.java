@@ -11,38 +11,32 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
- * this is a security configuration class for this application 
+ * this is a security configuration class for this application
+ * 
  * @author Administrador
  *
  */
 @Configuration
 @EnableWebSecurity
-public class WebSecurityconfig extends WebSecurityConfigurerAdapter{
+public class WebSecurityconfig extends WebSecurityConfigurerAdapter {
 
+	/**
+	 * This is a class to set the general permissions on the application using
+	 * Spring security.
+	 */
 	@Override
-	public void configure(HttpSecurity http) throws Exception{
-		http.authorizeRequests()
-				.antMatchers("/").permitAll()
-				.anyRequest().authenticated()
-				.and()
-		.formLogin()
-				.loginPage("/login")
-				.permitAll()
-				.and()
-		.logout()
-				.permitAll()
-				;		
+	public void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/").permitAll().anyRequest().authenticated().and().formLogin()
+				.loginPage("/login").permitAll().and().logout().permitAll();
 	}
-	
+
+	/**
+	 * This class returns a simple fake authentication for an user.
+	 */
 	@Bean
 	@Override
 	public UserDetailsService userDetailsService() {
-		UserDetails user = User.withDefaultPasswordEncoder()
-								.username("user")
-								.password("pass")
-								.roles("USER")
-								.build()
-								;
+		UserDetails user = User.withDefaultPasswordEncoder().username("user").password("pass").roles("USER").build();
 		return new InMemoryUserDetailsManager(user);
 	}
 }
