@@ -28,14 +28,20 @@ import javax.servlet.ServletException;
  *
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+	
+	String ISSUER_INFO = "Yo merengues";
+	String HEADER_AUTHORIZATION_KEY = "hrdcoded_auth_header_key";
+	String SUPER_SECRET_KEY="this is a key";
+	String TOKEN_BEARER_PREFIX="hrdcodded_prefix";
+	
 
 	private AuthenticationManager authenticationManager;
 	int TOKEN_EXPIRATION_TIME=60000000;
-	String SUPER_SECRET_KEY="this is a key";
+	
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
-		setFilterProcessesUrl("/login");
+		//setFilterProcessesUrl("/login");
 	}
 
 	@Override
@@ -57,7 +63,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				.setSubject(((User)auth.getPrincipal()).getUsername())
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY).compact();
-		response.addHeader(HEADER_AUTHORIZACION_KEY, TOKEN_BEARER_PREFIX + " " + token);	
+		response.addHeader(HEADER_AUTHORIZATION_KEY, TOKEN_BEARER_PREFIX + " " + token);	
 	}
 	
 }
