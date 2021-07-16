@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * This is our main application class. Nothing fancy here, just the class
  * initializer for Spring boot.
- * testing the git token again
  * 
  * @author Administrador
  *

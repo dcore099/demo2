@@ -28,28 +28,35 @@ import javax.servlet.ServletException;
  *
  */
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-	
+
 	String ISSUER_INFO = "Yo merengues";
 	String HEADER_AUTHORIZATION_KEY = "hrdcoded_auth_header_key";
-	String SUPER_SECRET_KEY="this is a key";
-	String TOKEN_BEARER_PREFIX="hrdcodded_prefix";
-	
+	String SUPER_SECRET_KEY = "this is a key";
+	String TOKEN_BEARER_PREFIX = "hrdcodded_prefix";
 
 	private AuthenticationManager authenticationManager;
-	int TOKEN_EXPIRATION_TIME=60000000;
-	
+	int TOKEN_EXPIRATION_TIME = 60000000;
 
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
 		this.authenticationManager = authenticationManager;
-		//setFilterProcessesUrl("/login");
+		// setFilterProcessesUrl("/login");
 	}
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res) {
+
+		System.out.println("There's been an authentication attempt..");
+
 		try {
+			System.out.println("request class: "+ req.getClass());
+			System.out.println("request InputStream: "+req.getInputStream());
+			System.out.println("request contentType: "+ req.getContentType());
+			System.out.println("request ParameterMap: "+ req.getParameterMap());
+			
 			User user = new ObjectMapper().readValue(req.getInputStream(), User.class);
 			return authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(user.getUser(), user.getPassword(), new ArrayList<>()));
+			
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -59,11 +66,13 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
 			Authentication auth) throws IOException, ServletException {
 
+		System.out.println("Succesfull authentication!");
+
 		String token = Jwts.builder().setIssuedAt(new Date()).setIssuer(ISSUER_INFO)
-				.setSubject(((User)auth.getPrincipal()).getUsername())
+				.setSubject(((User) auth.getPrincipal()).getUsername())
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 				.signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY).compact();
-		response.addHeader(HEADER_AUTHORIZATION_KEY, TOKEN_BEARER_PREFIX + " " + token);	
+		response.addHeader(HEADER_AUTHORIZATION_KEY, TOKEN_BEARER_PREFIX + " " + token);
 	}
-	
+
 }
