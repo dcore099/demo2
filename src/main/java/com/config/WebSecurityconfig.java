@@ -49,6 +49,8 @@ public class WebSecurityconfig extends WebSecurityConfigurerAdapter {
 		source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
 		return source;
 	}
+	
+	
 
 	/**
 	 * This class returns a simple fake authentication for an user.
